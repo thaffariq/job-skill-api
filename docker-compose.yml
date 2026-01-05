@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  job-skill-api:
+    build: .
+    container_name: uas-fariq-api
+    ports:
+      - "6161:6161"
+    env_file:
+      - .env
+    volumes:
+      - ./database:/app/database
+    restart: always
+    mem_limit: 128m
