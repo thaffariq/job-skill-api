@@ -7,8 +7,15 @@ class JobSkillController {
             const limit = parseInt(req.query.limit) || 10;
             const page = parseInt(req.query.page) || 1;
             const offset = (page - 1) * limit;
+            const category = req.query.category;
 
-            const skills = await repo.findAll(limit, offset);
+            let skills;
+            if (category) {
+                skills = await repo.findByCategory(category, limit);
+            } else {
+                skills = await repo.findAll(limit, offset);
+            }
+            
             res.json({ success: true, page, data: skills.map(s => s.toPublicFormat()) });
         } catch (error) { next(error); }
     }
